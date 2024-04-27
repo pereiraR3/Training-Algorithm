@@ -27,11 +27,13 @@ Welcome to my directory of solved exercises from the Beecrowd platform! Here are
 ## Contact
 
 | Anthony Ricardo Rodrigues Rezende | 
-|---|---|
-| <div style="display: flex;">
-  <img src="./images/anthony.jpeg" alt="Anthony's Photo" width="100"/>
-</div> |
+| --- |
+| <img src="./images/anthony.jpeg" alt="Anthony's Photo" width="100"/> | 
 
+- **Email:** anthony_rodriguespereira@outlook.com
+- **LinkedIn:** [Anthony's LinkedIn](https://www.linkedin.com/in/anthony-ricardo-rodrigues-rezende-486917227/)
+- **Beecrow:** [Anthony's Beecrowd](https://www.beecrowd.com.br/judge/pt/profile/639361)
+- **LeetCode:** [Anthony's LeetCode](https://leetcode.com/Pereira3RR/)
 ## Resources
 
 Here are some useful resources to continue learning and practicing:

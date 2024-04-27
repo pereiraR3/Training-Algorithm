@@ -30,7 +30,6 @@ Welcome to my directory of solved exercises from the Beecrowd platform! Here are
 |---|---|
 | <div style="display: flex;">
   <img src="./images/anthony.jpeg" alt="Anthony's Photo" width="100"/>
-  <img src="./images/other_image.jpeg" alt="Other Image" width="100"/>
 </div> |
 
 ## Resources

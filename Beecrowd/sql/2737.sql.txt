@@ -1,0 +1,26 @@
+(
+SELECT 
+	name, customers_number
+FROM 
+	lawyers
+ORDER BY customers_number DESC limit 1
+)
+	
+UNION ALL
+
+(
+SELECT 
+	name, customers_number
+FROM 
+	lawyers
+ORDER BY customers_number ASC limit 1
+)
+	
+UNION ALL 
+
+(
+SELECT 
+	'Average' AS name, AVG(customers_number)::INTEGER AS customers_number
+FROM 
+	lawyers
+)

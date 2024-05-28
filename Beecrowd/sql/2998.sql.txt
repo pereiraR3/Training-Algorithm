@@ -1,0 +1,49 @@
+WITH RECURSIVE profit_sums AS (
+
+	SELECT
+		client_id, 
+		month, 
+		profit,
+		profit AS cumulative_profit, 
+		1 AS month_of_payback
+	FROM 
+		operations 
+
+	UNION ALL
+
+	SELECT 
+		op.client_id, 
+		op.month, 
+		op.profit, 
+		ps.cumulative_profit + op.profit AS cumulative_profit,
+		ps.month_of_payback + 1 AS month_of_payback
+	FROM 
+		operations op 
+	INNER JOIN 
+		clients cl 
+	ON 
+		(cl.id = op.client_id)
+	INNER JOIN 
+		profit_sums ps
+	ON
+		(ps.client_id = op.client_id) AND (op.month = ps.month + 1)
+	WHERE 
+		ps.cumulative_profit < cl.investment 
+)
+
+SELECT
+	name,
+	investment,
+	MAX(month_of_payback) AS month_of_payback,
+	(MAX(cumulative_profit) - investment) AS return
+FROM 
+	profit_sums ps
+INNER JOIN 
+	clients cl 
+ON 
+	(cl.id = ps.client_id) 
+WHERE 
+	ps.cumulative_profit >= investment 
+GROUP BY  
+	name, investment 
+

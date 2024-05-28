@@ -1,0 +1,4 @@
+SELECT name, ROUND(((math * 2  + specific * 3 + project_plan * 5) / 10), 2) AS avg
+FROM candidate ca
+INNER JOIN score s ON (s.candidate_id = ca.id)
+ORDER BY avg DESC 

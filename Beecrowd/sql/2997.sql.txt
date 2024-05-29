@@ -1,0 +1,67 @@
+WITH SalarioBruto AS (
+    SELECT 
+        e.matr,
+        ROUND(SUM(v.valor), 2) AS salario_bruto
+    FROM 
+        empregado e
+    LEFT JOIN 
+        emp_venc ev ON e.matr = ev.matr
+    LEFT JOIN 
+        vencimento v ON ev.cod_venc = v.cod_venc
+    GROUP BY 
+        e.matr
+),
+TotalDesconto AS (
+    SELECT 
+        e.matr,
+        SUM(d.valor) AS total_desconto
+    FROM 
+        empregado e
+    LEFT JOIN 
+        emp_desc ed ON e.matr = ed.matr
+    LEFT JOIN 
+        desconto d ON ed.cod_desc = d.cod_desc
+    GROUP BY 
+        e.matr
+),
+EmpregadosComSalarios AS (
+    SELECT 
+        e.matr,
+        e.nome AS empregado,
+        COALESCE(sb.salario_bruto, 0) AS salario_bruto,
+        COALESCE(td.total_desconto, 0) AS total_desconto,
+        ROUND(sb.salario_bruto - COALESCE(td.total_desconto, 0), 2) AS salario_liquido,
+        e.lotacao,
+        e.lotacao_div
+    FROM 
+        empregado e
+    LEFT JOIN 
+        SalarioBruto sb ON e.matr = sb.matr
+    LEFT JOIN 
+        TotalDesconto td ON e.matr = td.matr
+),
+EmpregadosDetalhados AS (
+    SELECT 
+        ecs.empregado,
+        ecs.salario_bruto,
+        ecs.total_desconto,
+        ecs.salario_liquido,
+        d.nome AS departamento,
+        dv.nome AS divisao
+    FROM 
+        EmpregadosComSalarios ecs
+    LEFT JOIN 
+        divisao dv ON ecs.lotacao_div = dv.cod_divisao
+    LEFT JOIN 
+        departamento d ON dv.cod_dep = d.cod_dep
+)
+SELECT 
+    departamento,
+    empregado,
+    COALESCE(salario_bruto, 0) AS salario_bruto,
+    COALESCE(total_desconto, 0) AS total_desconto,
+    COALESCE(salario_liquido, 0) AS salario_liquido
+FROM 
+    EmpregadosDetalhados
+ORDER BY 
+    salario_liquido DESC;

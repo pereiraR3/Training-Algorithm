@@ -1,0 +1,9 @@
+SELECT 
+	po.id, po.name 
+FROM 
+	categories
+INNER JOIN 
+	products po
+ON 
+	(po.id_categories = categories.id)
+WHERE categories.name LIKE '%super%'
